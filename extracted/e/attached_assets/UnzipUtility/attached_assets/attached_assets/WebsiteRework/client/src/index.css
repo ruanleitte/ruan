@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  /* Mudança para um azul marinho mais masculino */
+  --primary: 210 100% 25%;
+  --primary-foreground: 0 0% 100%;
+  /* Laranja como cor secundária para contraste */
+  --secondary: 24 100% 50%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 220 60% 40%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 210 100% 25%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 224 71% 4%;
+  --foreground: 213 31% 91%;
+  --muted: 223 47% 11%;
+  --muted-foreground: 215.4 16.3% 66.9%;
+  --popover: 224 71% 4%;
+  --popover-foreground: 215 20.2% 95.5%;
+  --card: 224 71% 4%;
+  --card-foreground: 213 31% 91%;
+  --border: 216 34% 17%;
+  --input: 216 34% 17%;
+  /* Azul marinho mais escuro para o tema dark */
+  --primary: 210 100% 35%;
+  --primary-foreground: 0 0% 100%;
+  /* Laranja mais intenso para o tema dark */
+  --secondary: 24 95% 45%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 220 60% 50%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 210 100% 35%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Custom Styles */
+@layer components {
+  /* Animated gradient text utility classes are used directly in HTML */
+  
+  /* Card hover effects */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  /* Button hover animation */
+  .btn-hover {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  
+  .btn-hover::after {
+    @apply content-[''] absolute top-0 h-full w-0 left-0 bg-white/20 transition-all duration-300 ease-out;
+  }
+  
+  .btn-hover:hover::after {
+    @apply w-full;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-animated {
+    background-size: 300% 100%;
+    animation: gradientFlow 8s ease infinite;
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  /* Custom scrollbar styles */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thumb-primary::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--primary));
+    border-radius: 9999px;
+  }
+  
+  .scrollbar-track-transparent::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  /* Animation for pulse effect */
+  @keyframes ping {
+    75%, 100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+  
+  .animate-ping {
+    animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  
+  .fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+}
+
+/* Additional keyframes animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
