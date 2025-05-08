@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruan Jasiel | Portfolio</title>
+    <meta name="description" content="Portfolio profissional de Ruan Jasiel - Desenvolvimento Web e Planejamento Estratégico">
+    <meta name="keywords" content="portfólio, currículo, desenvolvimento web, Ruan Jasiel">
+    <meta name="author" content="Ruan Jasiel">
+    
+    <!-- Estilos para a página de redirecionamento -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #3b82f6;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #3b82f6;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .manual-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        #error-message {
+            display: none;
+            color: #e11d48;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Portfolio de Ruan Jasiel</h1>
+        <p>Carregando o portfolio profissional...</p>
+        
+        <div class="loading">
+            <div class="spinner"></div>
+            <span>Redirecionando para a página principal</span>
+        </div>
+        
+        <div id="error-message">
+            <p>Se você não for redirecionado automaticamente, por favor clique no botão abaixo:</p>
+            <a class="manual-link" href="./client/index.html">Acessar Portfolio</a>
+        </div>
+    </div>
+
+    <script>
+        // Função que tenta vários métodos para redirecionar
+        function smartRedirect() {
+            // Primeiro método: redirecionamento normal
+            window.location.href = "./client/index.html";
+            
+            // Segundo método (backup): mostrar link manual após 3 segundos
+            setTimeout(function() {
+                document.getElementById('error-message').style.display = 'block';
+            }, 3000);
+            
+            // Terceiro método (fallback extremo): redirecionar para caminho alternativo após 6 segundos
+            setTimeout(function() {
+                // Tenta outro caminho se o redirecionamento ainda não ocorreu
+                if (window.location.href.indexOf('client') === -1) {
+                    // Tenta o caminho /dist/
+                    window.location.href = "./dist/index.html";
+                }
+            }, 6000);
+        }
+        
+        // Iniciar redirecionamento quando a página carregar
+        window.onload = smartRedirect;
+    </script>
+</body>
+</html>

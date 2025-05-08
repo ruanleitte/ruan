@@ -1,6 +1,6 @@
 # Passo a Passo para Deploy no GitHub Pages
 
-Este guia vai te mostrar como lançar seu site usando o GitHub Pages, mesmo sendo leigo em programação.
+Este guia simplificado vai te mostrar como lançar seu site usando o GitHub Pages, mesmo se você for leigo em programação.
 
 ## Pré-requisitos
 
@@ -8,13 +8,17 @@ Este guia vai te mostrar como lançar seu site usando o GitHub Pages, mesmo send
 2. Ter o Git instalado no seu computador
 3. Ter o Node.js instalado no seu computador
 
-## Passo 1: Baixar os Arquivos do Replit
+## Método Simplificado (Recomendado)
+
+Criamos scripts especiais para facilitar todo o processo. Siga os passos abaixo:
+
+### Passo 1: Baixar os Arquivos do Replit
 
 1. No menu superior do Replit, clique em "Files" (Arquivos)
 2. Clique nos três pontos (...) e selecione "Download as zip"
 3. Extraia o arquivo ZIP em uma pasta no seu computador
 
-## Passo 2: Preparar o Repositório Git Local
+### Passo 2: Abrir o Terminal
 
 Abra o terminal (Prompt de Comando no Windows) e navegue até a pasta do projeto:
 
@@ -22,75 +26,37 @@ Abra o terminal (Prompt de Comando no Windows) e navegue até a pasta do projeto
 cd caminho/para/a/pasta/extraida
 ```
 
-## Passo 3: Iniciar o Git e Conectar ao GitHub
+### Passo 3: Preparar os Arquivos Necessários
 
-Execute os comandos que você já tem:
-
-```bash
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/ruanleitte/ruan.git
-```
-
-## Passo 4: Construir o Projeto
-
-Execute o comando para construir o projeto:
+Execute o script de preparação que criamos:
 
 ```bash
-npm install
-npm run build
+# Dar permissão de execução ao script
+chmod +x prepare-deploy.sh
+
+# Executar o script de preparação
+./prepare-deploy.sh
 ```
 
-Isso vai criar uma pasta `dist` com os arquivos do site prontos para deploy.
+Este script vai preparar todos os arquivos necessários para o deploy.
 
-## Passo 5: Preparar para o GitHub Pages
+### Passo 4: Fazer o Deploy
 
-Crie um arquivo `.nojekyll` na pasta dist para informar ao GitHub Pages que não use o Jekyll:
+Execute o script de deploy:
 
 ```bash
-touch dist/.nojekyll
+# Dar permissão de execução ao script (se ainda não fez)
+chmod +x github-deploy.sh
+
+# Executar o script de deploy
+./github-deploy.sh
 ```
 
-## Passo 6: Deploy para o GitHub Pages
+Siga as instruções na tela. O script vai guiar você em todo o processo.
 
-Temos duas opções para fazer o deploy:
+### Passo 5: Configurar o GitHub Pages
 
-### Opção 1: Usando o script que criamos
-
-1. Dê permissão de execução ao script:
-   ```bash
-   chmod +x github-deploy.sh
-   ```
-
-2. Execute o script:
-   ```bash
-   ./github-deploy.sh
-   ```
-
-3. Siga as instruções na tela
-
-### Opção 2: Comandos manuais
-
-Se preferir fazer manualmente, siga estes passos:
-
-1. Adicione a pasta dist ao Git:
-   ```bash
-   git add dist -f
-   ```
-
-2. Faça um commit:
-   ```bash
-   git commit -m "Deploy para GitHub Pages"
-   ```
-
-3. Crie e envie para o branch gh-pages:
-   ```bash
-   git subtree push --prefix dist origin gh-pages
-   ```
-
-## Passo 7: Configurar o GitHub Pages
+Após o deploy, você precisa ativar o GitHub Pages no seu repositório:
 
 1. Vá ao seu repositório no GitHub (https://github.com/ruanleitte/ruan)
 2. Clique em "Settings" (Configurações)
@@ -98,28 +64,81 @@ Se preferir fazer manualmente, siga estes passos:
 4. Em "Source", selecione "Deploy from a branch"
 5. Em "Branch", selecione "gh-pages" e clique em "Save"
 
-## Passo 8: Acesse seu site
+### Passo 6: Acesse seu site
 
 Após alguns minutos, seu site estará disponível em:
 https://ruanleitte.github.io/ruan/
 
-## Dicas para Atualizações Futuras
+## Método Manual (Alternativo)
 
-Quando quiser atualizar seu site:
+Se preferir fazer manualmente ou tiver problemas com os scripts:
 
-1. Faça as alterações necessárias nos arquivos
-2. Construa o projeto novamente:
-   ```bash
-   npm run build
-   ```
-3. Execute o script de deploy novamente:
-   ```bash
-   ./github-deploy.sh
-   ```
+### Passo 1: Preparar o Repositório Git
 
-Isso enviará as novas alterações para o GitHub Pages.
+```bash
+# Inicializar o Git
+git init
+
+# Configurar seu nome e email (se necessário)
+git config user.name "Seu Nome"
+git config user.email "seu.email@exemplo.com"
+
+# Criar o arquivo README inicial
+echo "# Portfolio de Ruan" >> README.md
+git add README.md
+git commit -m "first commit"
+
+# Configurar o branch principal
+git branch -M main
+
+# Conectar ao repositório remoto
+git remote add origin https://github.com/ruanleitte/ruan.git
+```
+
+### Passo 2: Garantir que todos os arquivos HTML estão prontos
+
+```bash
+# Criar pasta dist se não existir
+mkdir -p dist
+
+# Copiar arquivos necessários
+cp index.html dist/
+
+# Criar arquivo .nojekyll
+touch dist/.nojekyll
+
+# Criar arquivo 404.html para SPA
+# (copie o conteúdo do arquivo 404.html que criamos)
+```
+
+### Passo 3: Deploy para o GitHub Pages
+
+```bash
+# Criar branch temporário para deploy
+git checkout -b gh-pages-tmp
+
+# Adicionar pasta dist ao Git
+git add dist -f
+
+# Commit das alterações
+git commit -m "Deploy para GitHub Pages"
+
+# Push para o branch gh-pages
+git subtree push --prefix dist origin gh-pages
+
+# Voltar para o branch principal
+git checkout main
+git branch -D gh-pages-tmp
+```
 
 ## Solução de Problemas
+
+### Se o HTML não mostrar o site completo:
+
+Nosso HTML principal inclui vários métodos para carregar o seu site:
+1. Redirecionamento automático para o client/index.html
+2. Um botão manual para acessar o site se o redirecionamento falhar
+3. Um fallback para carregar o site de caminhos alternativos
 
 ### Se tiver erros de autenticação:
 
