@@ -1,0 +1,15 @@
+# Configuração para o Netlify
+[build]
+  # Comando para compilar o site
+  command = "npm run build"
+  # Pasta onde os arquivos compilados serão gerados
+  publish = "dist"
+
+# Redirecionamentos para Single Page Application (SPA)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "18"
